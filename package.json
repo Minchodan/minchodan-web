@@ -13,10 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "next": "^9.4.4",
+    "next-redux-wrapper": "^6.0.2",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "styled-components": "^5.1.1",
+    "styled-reset": "^4.2.1"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^7.4.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.3",
