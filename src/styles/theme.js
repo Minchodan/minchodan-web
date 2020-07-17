@@ -6,7 +6,7 @@ import baseStyled, {
 
 const sizes = {
   mobile: 320,
-  tablet: 768,
+  tablet: 600,
   desktop: 1024,
 };
 

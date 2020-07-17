@@ -5,14 +5,18 @@ import PropTypes from "prop-types";
 import wrapper from "../store/configureStore";
 import Layout from "../components/Layout";
 import GlobalStyles from "../styles/GlobalStyles";
+import { ThemeProvider } from "styled-components";
+import theme from "../styles/theme";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyles />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </>
   );
 }

@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useSignUp } from "../hooks/useSignUp";
+import { backgroundImgTwo } from "../assets/images";
+import utils from "../utils/index";
+
+const Background = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${backgroundImgTwo});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`;
 
 const SignUpBox = styled.div`
   display: flex;
@@ -45,37 +59,54 @@ const Input = styled.input`
 function SignUp() {
   const { id, password, name, onSetState } = useSignUp();
 
+  const handleOnSubmit = () => {
+    console.log("Enter key 클릭됨.");
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) =>
+      utils.enterKeydownListener(e, handleOnSubmit)
+    );
+    return () => {
+      document.removeEventListener("keydown", (e) =>
+        utils.enterKeydownListener(e, handleOnSubmit)
+      );
+    };
+  }, []);
+
   return (
-    <SignUpBox>
-      <BigTitle>회원가입</BigTitle>
-      <InputBox>
-        <Title>아이디</Title>
-        <Input
-          value={id}
-          onChange={(e) => onSetState({ key: "id", value: e.target.value })}
-          maxLength={20}
-        />
-      </InputBox>
-      <InputBox>
-        <Title>비밀번호</Title>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) =>
-            onSetState({ key: "password", value: e.target.value })
-          }
-          maxLength={20}
-        />
-      </InputBox>
-      <InputBox>
-        <Title>이름</Title>
-        <Input
-          value={name}
-          onChange={(e) => onSetState({ key: "name", value: e.target.value })}
-          maxLength={20}
-        />
-      </InputBox>
-    </SignUpBox>
+    <Background>
+      <SignUpBox>
+        <BigTitle>회원가입</BigTitle>
+        <InputBox>
+          <Title>아이디</Title>
+          <Input
+            value={id}
+            onChange={(e) => onSetState({ key: "id", value: e.target.value })}
+            maxLength={20}
+          />
+        </InputBox>
+        <InputBox>
+          <Title>비밀번호</Title>
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) =>
+              onSetState({ key: "password", value: e.target.value })
+            }
+            maxLength={20}
+          />
+        </InputBox>
+        <InputBox>
+          <Title>이름</Title>
+          <Input
+            value={name}
+            onChange={(e) => onSetState({ key: "name", value: e.target.value })}
+            maxLength={20}
+          />
+        </InputBox>
+      </SignUpBox>
+    </Background>
   );
 }
 

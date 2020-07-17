@@ -1,17 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import useInput from "../hooks/useInput";
 import { useUser } from "../hooks/useUser";
+import { backgroundImgOne } from "../assets/images";
+import utils from "../utils/index";
+
+const Background = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${backgroundImgOne});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`;
 
 const SignUpBox = styled.div`
   display: flex;
-  width: 600px;
+  
+  ${({ theme }) => theme.media.desktop`
+    ${() => `
+      width: 600px;
+      padding: 20px;
+    `};
+  `}
+  ${({ theme }) => theme.media.tablet`
+    ${() => `
+      width: 600px;
+      padding: 20px;
+    `};
+  `}
+  ${({ theme }) => theme.media.mobile`
+    ${() => `
+      max-width: 600px; 
+      width: 100%;
+      padding: 0px;
+    `};
+  `}
   height: 300px;
   background-color: #4e484a;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  
 `;
 
 const InputBox = styled.div`
@@ -51,23 +84,40 @@ function Index() {
 
   console.log({ isLoggedIn, token });
 
+  const handleOnSubmit = () => {
+    console.log("Enter key 눌름 .");
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) =>
+      utils.enterKeydownListener(e, handleOnSubmit)
+    );
+    return () => {
+      document.removeEventListener("keydown", (e) =>
+        utils.enterKeydownListener(e, handleOnSubmit)
+      );
+    };
+  }, []);
+
   return (
-    <SignUpBox>
-      <BigTitle>로그인</BigTitle>
-      <InputBox>
-        <Title>아이디</Title>
-        <Input value={id} onChange={(e) => setId(e)} maxLength={20} />
-      </InputBox>
-      <InputBox>
-        <Title>비밀번호</Title>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e)}
-          maxLength={20}
-        />
-      </InputBox>
-    </SignUpBox>
+    <Background>
+      <SignUpBox>
+        <BigTitle>로그인</BigTitle>
+        <InputBox>
+          <Title>아이디</Title>
+          <Input value={id} onChange={(e) => setId(e)} maxLength={20} />
+        </InputBox>
+        <InputBox>
+          <Title>비밀번호</Title>
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e)}
+            maxLength={20}
+          />
+        </InputBox>
+      </SignUpBox>
+    </Background>
   );
 }
 

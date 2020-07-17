@@ -7,6 +7,8 @@ const globalStyles = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
+        height: 100%;
+        font-size: 15px;
         font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
         /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif,'NanumSquareRoundR','NanumSquareRoundB'; */
         /* font-size: 15px;
