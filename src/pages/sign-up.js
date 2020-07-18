@@ -19,8 +19,22 @@ const Background = styled.div`
 
 const SignUpBox = styled.div`
   display: flex;
-  width: 600px;
-  height: 400px;
+  ${({ theme }) => theme.media.desktop`
+    ${() => `
+      width: 600px;
+    `};
+  `};
+  ${({ theme }) => theme.media.tablet`
+    ${() => `
+      width: 600px;
+    `};
+  `};
+  ${({ theme }) => theme.media.mobile`
+    ${() => `
+      width: 100%;
+    `};
+  `};
+  height: 300px;
   background-color: #4e484a;
   flex-direction: column;
   justify-content: center;
@@ -30,28 +44,56 @@ const SignUpBox = styled.div`
 const InputBox = styled.div`
   flex: 1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const BigTitle = styled.span`
-  font-size: 50px;
   font-weight: 600;
   text-align: center;
   color: #9d9b9c;
+  ${({ theme }) => theme.media.desktop`
+    ${() => `
+      font-size: 50px;
+    `}
+  `};
+  ${({ theme }) => theme.media.tablet`
+    ${() => `
+      font-size: 50px;
+    `}
+  `};
+  ${({ theme }) => theme.media.mobile`
+    ${() => `
+      font-size: 40px;
+    `}
+  `};
 `;
 
 const Title = styled.span`
   flex: 1;
   color: #9d9b9c;
-  font-size: 35px;
   font-weight: 500;
   text-align: right;
   margin-right: 20px;
+  ${({ theme }) => theme.media.desktop`
+    ${() => `
+      font-size: 35px;
+    `};
+  `};
+  ${({ theme }) => theme.media.tablet`
+    ${() => `
+      font-size: 35px;
+    `};
+  `};
+  ${({ theme }) => theme.media.mobile`
+    ${() => `
+      font-size: 25px;
+    `};
+  `};
 `;
 
 const Input = styled.input`
   flex: 2;
+  width: 100%;
   color: #9d9b9c;
   font-size: 35px;
 `;
