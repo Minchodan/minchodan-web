@@ -54,7 +54,7 @@ const initialState = {
       level: 1,
       type: "message",
       kind: "T",
-      msg: "나 대신 널 도와줄 수 있는 괴짜 친구를 찾을 수 있을 거란다.",
+      msg: "나 대신 널 도와줄 수 있는 내 친구를 찾을 수 있을 거란다.",
       time: 3000,
     },
     {
