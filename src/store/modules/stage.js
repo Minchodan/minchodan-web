@@ -134,7 +134,7 @@ const initialState = {
       msg: "확인",
       time: 3000,
       onClickType: "CONFIRM_ANSWER",
-      userAnswer: "print(install Scantool)",
+      userAnswer: "print(installScantool)",
       correctAnswer: "install Scantool",
     },
     {
@@ -557,6 +557,80 @@ const initialState = {
         ssd 변수는 1번, hhd 변수는 3번, disk_drive 변수는 10번 포트로 지정을 해줘야 할 것 같습니다
         코드를 추가해 봅시다.`,
       time: 5000,
+    },
+    {
+      level: 26,
+      type: "button",
+      kind: null,
+      msg: "확인",
+      time: 3000,
+      onClickType: "CONFIRM_ANSWER",
+      userAnswer: `ssd=1hhd=3disk_drive=10`,
+      correctAnswer: "",
+    },
+    {
+      level: 27,
+      type: "description",
+      kind: null,
+      msg: `이런 연산 과정을 두 번 이상 처리할 수 없는 것 같다….
+        한번 선생님의 친구에게 도움을 요청해보자`,
+      time: 5000,
+    },
+    {
+      level: 27,
+      type: "button",
+      kind: null,
+      msg: "선생님의 친구에게 메시지를 보낸다",
+      time: 3000,
+      onClickType: "NEXT_LEVEL",
+    },
+    {
+      level: 28,
+      type: "description",
+      kind: null,
+      msg: `뭐? 코드를 추가해야 하는데 작업을 한 번에 끝내야 한다고?
+
+        변수는
+        변수이름1, 변수이름2, 변수이름3 = 값1, 값2, 값3
+        이런 식으로도 설정할 수 있어 참고로 이 방법은 변수의 개수와 값의 개수가
+        다르면 에러가 나니까 조심하고
+        
+        만약 변수는 여러 개 만드는데 값이 모두 같으면
+        이렇게 변수1 = 변수2 = 변수3 = 값
+        이런 형식으로 귀찮지 않게 코드를 작성할 수도 있지
+        
+        보니까 변수에 관해서도 잘 모르는 것 같은데 조금 이따 변수에 관한
+        내용을 더 보내줄게
+        지금은 바빠서 정신없으니까 일단은 그걸로 충분할 거야`,
+      time: 5000,
+    },
+    {
+      level: 28,
+      type: "button",
+      kind: null,
+      msg: "확인",
+      time: 3000,
+      onClickType: "CONFIRM_ANSWER",
+      userAnswer: `ssd,hhd,disk_drive=1,3,10`,
+      correctAnswer: "",
+    },
+    {
+      level: 29,
+      type: "description",
+      kind: null,
+      msg: `코드를 추가하고 노트북을 전원을 다시 한 번 눌러보니
+        처음 보는 메인보드의 제조사 로고가 잠깐 보이더나 구형 OS가 정상적으로 켜졌다.
+        어서 빨리 이 불쾌한 곳을 빠져나가
+        책방으로 가자`,
+      time: 5000,
+    },
+    {
+      level: 29,
+      type: "button",
+      kind: null,
+      msg: "창고를 빠져나온다",
+      time: 3000,
+      onClickType: "NEXT_LEVEL",
     },
   ],
   message: [],
