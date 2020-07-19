@@ -29,19 +29,29 @@ function CodeEditor({ width }) {
       onInitialize();
       onSetState({ key: "level", value: level + 1 });
     } else if (item.onClickType === "CONFIRM_ANSWER") {
-      if (code.length < 1) {
+      let trimCode = code.replace(/\s+/, "");
+      trimCode = code.replace(/\s+$/g, "");
+      trimCode = code.replace(/\n/g, "");
+      trimCode = code.replace(/\r/g, "");
+      trimCode = code.replace(/(\r\n\t|\n|\r\t)/gm, "");
+
+      if (trimCode.length < 1) {
         return alert(
           "코드 창에 알맞은 코드를 입력하신 후 확인 버튼을 클릭해주세요."
         );
       }
 
-      if (code !== item.userAnswer) {
+      if (trimCode !== item.userAnswer) {
         return alert("올바른 코드가 아닙니다. 다시 입력해주시기 바랍니다.");
       }
 
       alert(item.correctAnswer);
       setCode(item.correctAnswer);
       onInitialize();
+      onSetState({ key: "level", value: level + 1 });
+    } else if (item.onClickType === "SET_CODE") {
+      onInitialize();
+      setCode(item.code);
       onSetState({ key: "level", value: level + 1 });
     }
   };

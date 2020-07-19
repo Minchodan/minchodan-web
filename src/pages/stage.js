@@ -160,7 +160,8 @@ function Stage() {
                   </div>
                 )}
 
-                <Typical steps={[item.msg, item.time]} loop={1} wrapper="p" />
+                <div>{item.msg}</div>
+                {/* <Typical steps={[item.msg, item.time]} loop={1} wrapper="p" /> */}
               </div>
             );
           })}
@@ -195,6 +196,8 @@ function delay({ time }) {
 function validImgByKind(kind) {
   if (kind === "T") {
     return teacherImg;
+  } else if (kind === "TF") {
+    return teacherImg;
   } else if (kind === "M") {
     return boyImg;
   } else if (kind === "F") {
@@ -207,6 +210,8 @@ function validImgByKind(kind) {
 function validNameByKind(kind) {
   if (kind === "T") {
     return "선생님";
+  } else if (kind === "TF") {
+    return "선생님의 친구";
   } else if (kind === "M") {
     return "나";
   } else if (kind === "F") {
