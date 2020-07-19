@@ -29,11 +29,8 @@ function CodeEditor({ width }) {
       onInitialize();
       onSetState({ key: "level", value: level + 1 });
     } else if (item.onClickType === "CONFIRM_ANSWER") {
-      let trimCode = code.replace(/\s+/, "");
-      trimCode = code.replace(/\s+$/g, "");
-      trimCode = code.replace(/\n/g, "");
-      trimCode = code.replace(/\r/g, "");
-      trimCode = code.replace(/(\r\n\t|\n|\r\t)/gm, "");
+      let trimCode = code.replace(/(\r\n\t|\n|\r\t)/gm, "");
+      trimCode = code.replace(/(\s*)/g, "");
 
       if (trimCode.length < 1) {
         return alert(
