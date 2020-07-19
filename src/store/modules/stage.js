@@ -124,7 +124,11 @@ const initialState = {
       level: 5,
       type: "description",
       kind: null,
-      msg: `"Scantool을 설치하시려면 print() 명령어를 이용해 설치할 프로그램 이름을 입력해서 설치 명령어를 출력하시오. 문장을 출력하시려면 출력하실 문자열을 ' 로 감싸야 합니다. ex: 'install' 한번 잘 따라서 프로그램을 설치해보자"`,
+      msg: `"Scantool을 설치하시려면
+      print() 명령어를 이용해 Install 설치할 프로그램 이름을 입력해서
+      설치 명령어를 출력하시오
+      문장을 출력하시려면 출력하실 문자열을' 로 감싸야 합니다. ex : 'Install'
+      한번 잘 따라서 프로그램을 설치해보자`,
       time: 5000,
     },
     {
@@ -134,8 +138,8 @@ const initialState = {
       msg: "확인",
       time: 3000,
       onClickType: "CONFIRM_ANSWER",
-      userAnswer: "print(installScantool)",
-      correctAnswer: "install Scantool",
+      userAnswer: "print(InstallScantool)",
+      correctAnswer: "Install Scantool",
     },
     {
       level: 6,
