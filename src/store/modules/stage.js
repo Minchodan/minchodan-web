@@ -6,7 +6,7 @@ export const INITIALIZE_ARRAY = "stage/INITIALIZE_ARRAY";
 export const ADD_ARRAY = "stage/ADD_ARRAY";
 
 const initialState = {
-  level: 21,
+  level: 1,
   story: [
     {
       level: 1,
