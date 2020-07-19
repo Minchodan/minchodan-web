@@ -1,9 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import Typical from "react-typical";
 
-import { backgroundImgOne, backgroundImgThree } from "../assets/images";
-import BottomSwiper from "../components/BottomSwiper";
+import {
+  backgroundImgOne,
+  teacherImg,
+  boyImg,
+  girlImg,
+} from "../assets/images";
 import CodeEditor from "../components/CodeEditor";
+import {
+  INITIALIZE,
+  ADD_ARRAY,
+  INITIALIZE_ARRAY,
+} from "../store/modules/stage";
 
 const Background = styled.div`
   display: flex;
@@ -19,8 +30,8 @@ const Background = styled.div`
   background-position: center;
 `;
 
-const MemoBox = styled.div`
-  background-color: #969475;
+const MessageBox = styled.div`
+  background-color: #2d2d2c;
   flex: 1;
   height: 100%;
 `;
@@ -36,84 +47,43 @@ const DescriptionBox = styled.div`
   height: 100%;
 `;
 
-const HorizonBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const BigText = styled.span`
-  font-size: 35px;
-  font-weight: 600;
-  color: white;
-`;
-
-const AddButton = styled.button`
-  font-size: 30px;
-  border: 2px solid black;
-  padding-left: 9px;
-  padding-right: 9px;
-  border-radius: 20px;
-  color: black;
-  background-color: yellow;
-  cursor: pointer;
-`;
-
-const TextInput = styled.textarea`
-  border-color: transparent;
-  border: 1px solid black;
-  width: 100%;
-  font-size: 20px;
-  padding: 20px;
-  height: 60px;
-  background-color: #969475;
-  resize: none;
-  margin-bottom: 20px;
-  margin-top: 20px;
-`;
-
-const MemoList = styled.div`
-  overflow: scroll;
-  height: ${(props) => `${props.height}px`};
-`;
-
-const Memo = styled.textarea`
-  display: flex;
-  border-color: transparent;
-  resize: none;
-  min-height: 100px;
-  align-items: center;
-  font-size: 20px;
-  padding-left: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-  background-color: #969475;
-  cursor: inherit;
-`;
-
 function Stage() {
-  const [code, setCode] = useState("");
+  const [state, setState] = useState({
+    boxWidth: 0,
+    memoListHeight: 0,
+    bottomSwiper: { maxHeight: 0 },
+  });
 
-  const [memo, setMemo] = useState("");
-  const [memoList, setMemoList] = useState([]);
+  const level = useSelector((state) => state.stage.level);
+  const story = useSelector((state) => state.stage.story);
+  const message = useSelector((state) => state.stage.message);
+  const description = useSelector((state) => state.stage.description);
 
-  const [state, setState] = useState({ memoListHeight: 0 });
+  const dispatch = useDispatch();
 
-  const handleOnAdd = () => {
-    setMemo("");
-    setMemoList((prev) => {
-      return [memo, ...prev];
-    });
-  };
+  const onInitialize = useCallback(() => dispatch({ type: INITIALIZE }), [
+    dispatch,
+  ]);
+  const onInitializeArray = useCallback(
+    () => dispatch({ type: INITIALIZE_ARRAY }),
+    [dispatch]
+  );
+  const onAddArray = useCallback(
+    ({ key, value }) => dispatch({ type: ADD_ARRAY, key, value }),
+    [dispatch]
+  );
+
+  console.log({ level, story });
 
   const init = () => {
     setState((prevState) => {
       return {
         ...prevState,
+        boxWidth: window.innerWidth / 3,
         memoListHeight: window.innerHeight - 170,
+        bottomSwiper: {
+          maxHeight: window.innerHeight - 50,
+        },
       };
     });
   };
@@ -127,66 +97,123 @@ function Stage() {
     };
   }, []);
 
+  const preLoad = async () => {
+    onInitialize;
+    for (let i = 0, len = story.length; i < len; i++) {
+      if (story[i].level === level) {
+        if (story[i].type === "message") {
+          onAddArray({ key: "message", value: story[i] });
+          await delay({ time: story[i].time });
+        } else if (story[i].type === "description") {
+          onAddArray({ key: "description", value: story[i] });
+          await delay({ time: story[i].time });
+        } else if (story[i].type === "button") {
+          onAddArray({ key: "button", value: story[i] });
+          await delay({ time: story[i].time });
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log("레벨 바뀜??", level);
+
+    onInitializeArray();
+    preLoad();
+  }, [level]);
+
   return (
     <>
       <Background>
-        <MemoBox>
-          <HorizonBox>
-            <BigText>MEMO</BigText>
-            <AddButton onClick={handleOnAdd}>+</AddButton>
-          </HorizonBox>
-          <TextInput
-            type="text"
-            value={memo}
-            onChange={(v) => {
-              setMemo(v.target.value);
-            }}
-          />
-          <MemoList height={state.memoListHeight}>
-            {memoList.map((item, index) => {
-              console.log({ item });
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    borderWidth: 1,
-                    borderStyle: "solid",
-                    borderColor: "black",
-                  }}
-                >
-                  <Memo readOnly={true} value={item} />
-                  <button
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setMemoList((prevState) => {
-                        const result = prevState.filter(
-                          (prevItem, prevIndex) => {
-                            if (prevIndex !== index) {
-                              return prevItem;
-                            }
-                          }
-                        );
-
-                        return [...result];
-                      });
+        <MessageBox>
+          {message.map((item) => {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: 20,
+                  borderBottom: "1px solid #2E3129",
+                  color: "white",
+                }}
+              >
+                {validImgByKind(item.kind) && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
                     }}
                   >
-                    ❌
-                  </button>
-                </div>
-              );
-            })}
-          </MemoList>
-          <BottomSwiper />
-        </MemoBox>
+                    <img
+                      src={validImgByKind(item.kind)}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        border: "1px solid #2E3129",
+                        borderRadius: 30,
+                        marginBottom: 10,
+                      }}
+                    />
+                    <span>{validNameByKind(item.kind)}</span>
+                  </div>
+                )}
+
+                <Typical steps={[item.msg, item.time]} loop={1} wrapper="p" />
+              </div>
+            );
+          })}
+        </MessageBox>
         <EditorBox>
-          <CodeEditor />
+          <CodeEditor width={state.boxWidth} />
         </EditorBox>
-        <DescriptionBox>3</DescriptionBox>
+        <DescriptionBox>
+          {description.map((item) => {
+            return (
+              <div style={{ color: "white", padding: 20 }}>
+                <Typical steps={[item.msg, item.time]} loop={1} wrapper="p" />
+              </div>
+            );
+          })}
+        </DescriptionBox>
       </Background>
     </>
   );
 }
 
 export default Stage;
+
+function delay({ time }) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}
+
+function validImgByKind(kind) {
+  if (kind === "T") {
+    return teacherImg;
+  } else if (kind === "M") {
+    return boyImg;
+  } else if (kind === "F") {
+    return girlImg;
+  }
+
+  return null;
+}
+
+function validNameByKind(kind) {
+  if (kind === "T") {
+    return "선생님";
+  } else if (kind === "M") {
+    return "나";
+  } else if (kind === "F") {
+    return "누구?";
+  }
+
+  return null;
+}

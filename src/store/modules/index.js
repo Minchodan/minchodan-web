@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 
 import user from "./user";
 import signUp from "./signUp";
+import stage from "./stage";
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -13,6 +14,7 @@ const rootReducer = (state, action) => {
       const combinedReducer = combineReducers({
         user,
         signUp,
+        stage,
       });
       return combinedReducer(state, action);
     }

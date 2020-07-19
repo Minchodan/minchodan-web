@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
-import useInput from "../hooks/useInput";
-import { useUser } from "../hooks/useUser";
 import { backgroundImgOne } from "../assets/images";
-import utils from "../utils/index";
 
 const Background = styled.div`
   display: flex;
@@ -18,7 +16,7 @@ const Background = styled.div`
   background-position: center;
 `;
 
-const SignUpBox = styled.div`
+const Box = styled.div`
   display: flex;
   ${({ theme }) => theme.media.desktop`
     ${() => `
@@ -42,16 +40,11 @@ const SignUpBox = styled.div`
   padding: 20px;
 `;
 
-const InputBox = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`;
-
-const BigTitle = styled.span`
+const StartButton = styled.span`
   font-weight: 600;
   text-align: center;
   color: #9d9b9c;
+  cursor: pointer;
   ${({ theme }) => theme.media.desktop`
     ${() => `
       font-size: 50px;
@@ -69,77 +62,14 @@ const BigTitle = styled.span`
   `};
 `;
 
-const Title = styled.span`
-  flex: 1;
-  color: #9d9b9c;
-  font-weight: 500;
-  text-align: right;
-  margin-right: 20px;
-  ${({ theme }) => theme.media.desktop`
-    ${() => `
-      font-size: 35px;
-    `};
-  `};
-  ${({ theme }) => theme.media.tablet`
-    ${() => `
-      font-size: 35px;
-    `};
-  `};
-  ${({ theme }) => theme.media.mobile`
-    ${() => `
-      font-size: 25px;
-    `};
-  `};
-`;
-
-const Input = styled.input`
-  flex: 2;
-  width: 100%;
-  color: #9d9b9c;
-  font-size: 35px;
-`;
-
 function Index() {
-  const [id, setId] = useInput("");
-  const [password, setPassword] = useInput("");
-
-  const { isLoggedIn, token, onInitialize } = useUser();
-
-  console.log({ isLoggedIn, token });
-
-  const handleOnSubmit = () => {
-    console.log("Enter key 눌름 .");
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", (e) =>
-      utils.enterKeydownListener(e, handleOnSubmit)
-    );
-    return () => {
-      document.removeEventListener("keydown", (e) =>
-        utils.enterKeydownListener(e, handleOnSubmit)
-      );
-    };
-  }, []);
-
   return (
     <Background>
-      <SignUpBox>
-        <BigTitle>로그인</BigTitle>
-        <InputBox>
-          <Title>아이디</Title>
-          <Input value={id} onChange={(e) => setId(e)} maxLength={20} />
-        </InputBox>
-        <InputBox>
-          <Title>비밀번호</Title>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e)}
-            maxLength={20}
-          />
-        </InputBox>
-      </SignUpBox>
+      <Box>
+        <Link href="/stage">
+          <StartButton>게임 시작하기</StartButton>
+        </Link>
+      </Box>
     </Background>
   );
 }
