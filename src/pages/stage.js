@@ -116,8 +116,6 @@ function Stage() {
   };
 
   useEffect(() => {
-    console.log("레벨 바뀜??", level);
-
     onInitializeArray();
     preLoad();
   }, [level]);

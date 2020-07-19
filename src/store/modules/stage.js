@@ -317,7 +317,7 @@ const initialState = {
       msg: "확인",
       time: 3000,
       onClickType: "CONFIRM_ANSWER",
-      userAnswer: "1024*/5",
+      userAnswer: "1024/5",
       correctAnswer: "204.8",
     },
     {
