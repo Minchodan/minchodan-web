@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx next",
-    "build": "npx next build",
+    "build": "npx next build && npx next export",
     "start": "npx next start"
   },
   "keywords": [],
